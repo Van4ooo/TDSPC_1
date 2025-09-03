@@ -1,0 +1,9 @@
+[package]
+name = "TDSPC_1_"
+version = "0.1.0"
+edition = "2024"
+authors = ["Ivan Rybachyk <ivan2005rubachyk@gmail.com>"]
+license = "MIT"
+
+
+[dependencies]

@@ -1,7 +1,7 @@
 use std::thread;
 use std::time::Duration;
 
-fn task1(n: i32){
+fn task1(n: i32) {
     for i in 0..n {
         println!("[FIRST THREAD] {i}^3 = {}", i.pow(3));
         thread::sleep(Duration::from_secs(1));
@@ -9,7 +9,7 @@ fn task1(n: i32){
     println!("[FIRST THREAD] finished");
 }
 
-fn task2(n: i32){
+fn task2(n: i32) {
     for i in 0..n {
         println!("[SECOND THREAD] {i}^2 = {}", i.pow(2));
         thread::sleep(Duration::from_secs(1));

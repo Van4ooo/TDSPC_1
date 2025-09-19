@@ -1,0 +1,10 @@
+[package]
+name = "hw2"
+description = "Використовуючи метод Монте-Карло обчислює число ПІ"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+rand.workspace = true

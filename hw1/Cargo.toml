@@ -1,0 +1,9 @@
+[package]
+name = "hw1"
+description = "Два потоки, що паралельно обчислюють що завгодно"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]

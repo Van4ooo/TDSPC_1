@@ -1,4 +1,4 @@
-name: Rust
+name: Rust CI
 
 on:
   push:
@@ -11,9 +11,28 @@ permissions:
   pull-requests: write
 
 jobs:
-  build-and-test:
+  lint:
     runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+          override: true
+          components: rustfmt, clippy
+
+      - name: Run Clippy (fail on warnings)
+        run: cargo clippy --all-targets -- -D warnings
+
+      - name: Check formatting
+        run: cargo fmt --all -- --check
+
+  test:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -25,11 +44,5 @@ jobs:
           toolchain: stable
           override: true
 
-      - name: Run Clippy
-        run: cargo clippy --all-targets
-
-      - name: Check formatting
-        run: cargo fmt --all
-
       - name: Run tests
-        run: cargo test
+        run: cargo test --all

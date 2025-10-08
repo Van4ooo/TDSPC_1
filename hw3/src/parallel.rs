@@ -79,7 +79,7 @@ mod tests {
         let rez_rev = thread_pool.execute(|data| {
             let mut ptr = data.lock().unwrap();
             *ptr += 1;
-            return Ok(*ptr);
+            Ok(*ptr)
         });
 
         let mut rez: Vec<_> = rez_rev

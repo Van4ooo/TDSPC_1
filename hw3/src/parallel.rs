@@ -56,7 +56,7 @@ pub fn calc_steps(deque: Arc<Mutex<LinkedList<u64>>>) -> Result<(u128, u128), Er
 
         if let Some(el) = el {
             count += 1;
-            total_steps += Collatz::steps(el).ok_or(ErrorStatus::StepOverflow{step: el})?;
+            total_steps += Collatz::steps(el).ok_or(ErrorStatus::StepOverflow { step: el })?;
         } else {
             return if count == 0 {
                 Err(ErrorStatus::EmptyDeque)
@@ -82,7 +82,10 @@ mod tests {
             return Ok(*ptr);
         });
 
-        let mut rez: Vec<_> = rez_rev.into_iter().map(|el: thread::Result<_>| el.unwrap()).collect();
+        let mut rez: Vec<_> = rez_rev
+            .into_iter()
+            .map(|el: thread::Result<_>| el.unwrap())
+            .collect();
         rez.sort();
 
         assert_eq!(rez, vec![2, 3, 4, 5]);
@@ -94,38 +97,38 @@ mod tests {
         let tread_pool = ThreadPool::new(4, data).unwrap();
 
         let rez = tread_pool.execute(|data| calc_steps(data));
-        for nth in rez{
+        for nth in rez {
             assert_eq!(nth.err().unwrap(), ErrorStatus::EmptyDeque);
         }
     }
 
     #[test]
-    fn check_avg_steps(){
+    fn check_avg_steps() {
         let data = LinkedList::from([27, 97, 77_031, 3, 6, 6, 8_400_511]);
         let thread_pool = ThreadPool::new(4, data).unwrap();
 
-        let rez = thread_pool.execute(|data| calc_steps(data));
+        let rez = thread_pool.execute(calc_steps);
         let rez: Vec<(u128, u128)> = rez.into_iter().map(|n| n.unwrap_or_default()).collect();
 
         assert_eq!(rez.iter().map(|(s, _)| *s as u32).sum::<u32>(), 1287);
-        assert_eq!(rez.iter().map(|(_, c)| *c as u32).sum::<u32>() , 7);
+        assert_eq!(rez.iter().map(|(_, c)| *c as u32).sum::<u32>(), 7);
 
         dbg!(rez);
     }
 
     #[test]
-    fn check_par(){
+    fn check_par() {
         let mut data = LinkedList::new();
-        for _ in 0..100_000{
+        for _ in 0..100_000 {
             data.push_back(8_400_511);
         }
         let thread_pool = ThreadPool::new(4, data).unwrap();
 
-        let rez = thread_pool.execute(|data| calc_steps(data));
+        let rez = thread_pool.execute(calc_steps);
         let rez: Vec<(u128, u128)> = rez.into_iter().map(|n| n.unwrap_or_default()).collect();
 
         assert_eq!(rez.iter().map(|(s, _)| *s as u32).sum::<u32>(), 68_500_000);
-        assert_eq!(rez.iter().map(|(_, c)| *c as u32).sum::<u32>() , 100_000);
+        assert_eq!(rez.iter().map(|(_, c)| *c as u32).sum::<u32>(), 100_000);
 
         dbg!(rez);
     }

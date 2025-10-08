@@ -1,8 +1,8 @@
 pub struct Collatz;
 
-impl Collatz{
+impl Collatz {
     #[inline]
-    fn next(n: u128) -> Option<u128>{
+    fn next(n: u128) -> Option<u128> {
         if n & 1 == 0 {
             Some(n / 2)
         } else {
@@ -10,7 +10,7 @@ impl Collatz{
         }
     }
 
-    pub fn steps(n: u64) -> Option<u128>{
+    pub fn steps(n: u64) -> Option<u128> {
         if n == 0 {
             return None;
         }
@@ -30,7 +30,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn valid_numbers(){
+    fn valid_numbers() {
         for (input, expected) in [
             (1, 0),
             (2, 1),
@@ -40,14 +40,19 @@ mod tests {
             (97, 118),
             (77_031, 350),
             (837_799, 524),
-            (8_400_511, 685)
+            (8_400_511, 685),
         ] {
-            assert_eq!(Collatz::steps(input).unwrap(), expected, "Failed on input {}", input);
+            assert_eq!(
+                Collatz::steps(input).unwrap(),
+                expected,
+                "Failed on input {}",
+                input
+            );
         }
     }
 
     #[test]
-    fn invalid_numbers(){
+    fn invalid_numbers() {
         assert_eq!(Collatz::steps(0), None);
     }
 }

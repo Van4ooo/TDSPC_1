@@ -96,7 +96,7 @@ mod tests {
         let data = LinkedList::new();
         let tread_pool = ThreadPool::new(4, data).unwrap();
 
-        let rez = tread_pool.execute(|data| calc_steps(data));
+        let rez = tread_pool.execute(calc_steps);
         for nth in rez {
             assert_eq!(nth.err().unwrap(), ErrorStatus::EmptyDeque);
         }

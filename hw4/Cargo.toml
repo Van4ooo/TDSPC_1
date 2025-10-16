@@ -1,0 +1,10 @@
+[package]
+name = "hw4"
+description = "Переписаний hw3 без використання обʼєктів синхронізації"
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+rand = {workspace = true}

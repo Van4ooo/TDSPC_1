@@ -1,0 +1,10 @@
+[package]
+name = "hw3"
+description = "Реалізувати обчислення чисел відповідно до гіпотези Колаца, використовуючи підходи паралельних обчислень."
+version.workspace = true
+edition.workspace = true
+authors.workspace = true
+license.workspace = true
+
+[dependencies]
+rand = {workspace = true}
